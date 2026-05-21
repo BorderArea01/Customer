@@ -165,11 +165,12 @@ onBeforeUnmount(() => stopAutoScroll())
 <style lang="css">
 .announcement-overlay {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 50;
-  padding: 0.5rem 0.75rem 1rem;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  left: 0.75rem;
+  width: min(46vw, 46rem);
+  max-width: calc(100vw - 1.5rem);
+  z-index: 45;
+  padding: 0;
   pointer-events: none;
 }
 
@@ -188,7 +189,7 @@ onBeforeUnmount(() => stopAutoScroll())
 .scroll-track {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 26vh;
+  max-height: min(22vh, 13rem);
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -261,7 +262,7 @@ onBeforeUnmount(() => stopAutoScroll())
   gap: 1rem;
   padding: 0.875rem 1.25rem;
   margin: 0 auto;
-  max-width: 90vw;
+  max-width: 100%;
   border-radius: 0.5rem;
   background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
   border: 1px solid var(--border-color, rgba(128,128,128,0.18));
@@ -293,5 +294,24 @@ onBeforeUnmount(() => stopAutoScroll())
 
 [data-theme="dark"] .announcement-title {
   color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 900px), (orientation: portrait) {
+  .announcement-overlay {
+    top: calc(env(safe-area-inset-top) + 4.75rem);
+    bottom: auto;
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+  }
+
+  .scroll-track {
+    max-height: min(20vh, 11rem);
+  }
+
+  .announcement-card,
+  .single-card {
+    padding: 0.625rem 0.75rem;
+  }
 }
 </style>
