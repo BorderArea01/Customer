@@ -298,15 +298,14 @@ onBeforeUnmount(() => stopAutoScroll())
 
 @media (max-width: 900px), (orientation: portrait) {
   .announcement-overlay {
-    top: calc(env(safe-area-inset-top) + 4.75rem);
-    bottom: auto;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
     left: 0.75rem;
-    right: 0.75rem;
-    width: auto;
+    right: auto;
+    width: min(48vw, 21rem);
   }
 
   .scroll-track {
-    max-height: min(20vh, 11rem);
+    max-height: min(24vh, 12rem);
   }
 
   .announcement-card,
