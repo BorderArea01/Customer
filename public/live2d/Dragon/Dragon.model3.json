@@ -1,0 +1,23 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "Dragon.moc3",
+		"Textures": [
+			"Dragon.4096/texture_00.png"
+		],
+		"DisplayInfo": "Dragon.cdi3.json"
+	},
+	"Layout": {
+		"CenterX": 0.0,
+		"CenterY": 0.0,
+		"Width": 1,   
+		"Height": 1.5   
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}

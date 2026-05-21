@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 主题CSS变量 */
+:root {
+  /* 背景色 */
+  --bg-color: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-layout: #f8f8f8;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-modal: #ffffff;
+  --bg-tooltip: #ffffff;
+
+  /* 文字颜色 */
+  --text-color: rgba(0, 0, 0, 0.88);
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --text-tertiary: rgba(0, 0, 0, 0.45);
+  --text-quaternary: rgba(0, 0, 0, 0.25);
+  --text-disabled: rgba(0, 0, 0, 0.25);
+  --text-inverse: #ffffff;
+
+  /* 边框颜色 */
+  --border-color: #d9d9d9;
+  --border-secondary: #f0f0f0;
+  --border-light: rgba(0, 0, 0, 0.06);
+  --border-focus: #1da8a5;
+  --border-error: #ff4d4f;
+  --border-success: #52c41a;
+  --border-warning: #faad14;
+
+  /* 背景覆盖 */
+  --bg-overlay: rgba(255, 255, 255, 0.8);
+  --bg-hover: rgba(0, 0, 0, 0.05);
+  --bg-active: rgba(29, 168, 165, 0.1);
+  --bg-selected: rgba(29, 168, 165, 0.08);
+  --bg-disabled: rgba(0, 0, 0, 0.04);
+
+  /* 阴影 */
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-light: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-heavy: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-focus: 0 0 0 2px rgba(29, 168, 165, 0.2);
+
+  /* 主题色系 - 青绿色系 (可通过配置文件动态修改) */
+  --primary-color: #1da8a5;
+  --primary-light: #4db6b3;
+  --primary-lighter: #7ac4c2;
+  --primary-dark: #189a97;
+  --primary-darker: #158c89;
+
+  /* 辅助色系 - 蓝色系 (可通过配置文件动态修改) */
+  --secondary-color: #1890ff;
+  --secondary-light: #40a9ff;
+  --secondary-lighter: #69c0ff;
+  --secondary-dark: #096dd9;
+  --secondary-darker: #0050b3;
+
+  /* 功能色 */
+  --success-color: #52c41a;
+  --success-light: #73d13d;
+  --success-dark: #389e0d;
+  --warning-color: #faad14;
+  --warning-light: #ffc53d;
+  --warning-dark: #d48806;
+  --error-color: #ff4d4f;
+  --error-light: #ff7875;
+  --error-dark: #d9363e;
+  --info-color: #1890ff;
+  --info-light: #40a9ff;
+  --info-dark: #096dd9;
+
+  /* 渐变色 (可通过配置文件动态修改) */
+  --primary-gradient: linear-gradient(135deg, #1da8a5 0%, #197bb8 100%);
+  --primary-gradient-light: linear-gradient(135deg, #4db6b3 0%, #40a9ff 100%);
+  --primary-gradient-dark: linear-gradient(135deg, #189a97 0%, #096dd9 100%);
+  --secondary-gradient: linear-gradient(135deg, #1890ff 0%, #1da8a5 100%);
+  --success-gradient: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  --warning-gradient: linear-gradient(135deg, #faad14 0%, #ffc53d 100%);
+  --error-gradient: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+
+  /* 状态色 */
+  --status-online: #52c41a;
+  --status-offline: #d9d9d9;
+  --status-busy: #faad14;
+  --status-away: #1890ff;
+
+  /* 极光特效变量 */
+  --aurora-opacity: 0.3;
+  --aurora-bg1: rgba(255, 255, 255, 0.1);
+  --aurora-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 250, 255, 0.85) 25%, rgba(29, 168, 165, 0.08) 50%, rgba(25, 123, 184, 0.05) 75%, rgba(248, 252, 255, 0.9) 100%);
+  --title-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --subtitle-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  /* 最底层背景渐变色 (可通过配置文件动态修改) */
+  --bg-container: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 250, 255, 0.95) 25%, rgba(29, 168, 165, 0.12) 50%, rgba(25, 123, 184, 0.08) 75%, rgba(248, 252, 255, 0.98) 100%);
+
+  /* 兼容性变量 */
+  --color-primary: #1da8a5;
+  --color-primary-dark: #189a97;
+  --color-background: #ffffff;
+  --color-text: #1f2937;
+}
+
+/* 暗色模式变量 */
+[data-theme="dark"] {
+  --bg-color: #141414;
+  --bg-elevated: #1f1f1f;
+  --bg-layout: #000000;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #262626;
+  --bg-card: #1f1f1f;
+  --bg-modal: #1f1f1f;
+  --bg-tooltip: #262626;
+
+  --text-color: rgba(255, 255, 255, 0.85);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  --text-quaternary: rgba(255, 255, 255, 0.25);
+  --text-disabled: rgba(255, 255, 255, 0.25);
+  --text-inverse: #000000;
+
+  --border-color: rgba(255, 255, 255, 0.15);
+  --border-secondary: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-focus: #1da8a5;
+  --border-error: #ff4d4f;
+  --border-success: #52c41a;
+  --border-warning: #faad14;
+
+  --bg-overlay: rgba(255, 255, 255, 0.02);
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(29, 168, 165, 0.15);
+  --bg-selected: rgba(29, 168, 165, 0.12);
+  --bg-disabled: rgba(255, 255, 255, 0.04);
+
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --shadow-light: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-heavy: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 2px rgba(29, 168, 165, 0.3);
+
+  /* 主题色系 - 青绿色系 (可通过配置文件动态修改) */
+  --primary-color: #1da8a5;
+  --primary-light: #4db6b3;
+  --primary-lighter: #7ac4c2;
+  --primary-dark: #189a97;
+  --primary-darker: #158c89;
+
+  /* 辅助色系 - 蓝色系 (可通过配置文件动态修改) */
+  --secondary-color: #1890ff;
+  --secondary-light: #40a9ff;
+  --secondary-lighter: #69c0ff;
+  --secondary-dark: #096dd9;
+  --secondary-darker: #0050b3;
+
+  /* 功能色 */
+  --success-color: #52c41a;
+  --success-light: #73d13d;
+  --success-dark: #389e0d;
+  --warning-color: #faad14;
+  --warning-light: #ffc53d;
+  --warning-dark: #d48806;
+  --error-color: #ff4d4f;
+  --error-light: #ff7875;
+  --error-dark: #d9363e;
+  --info-color: #1890ff;
+  --info-light: #40a9ff;
+  --info-dark: #096dd9;
+
+  /* 渐变色 (可通过配置文件动态修改) */
+  --primary-gradient: linear-gradient(135deg, #1da8a5 0%, #197bb8 100%);
+  --primary-gradient-light: linear-gradient(135deg, #4db6b3 0%, #40a9ff 100%);
+  --primary-gradient-dark: linear-gradient(135deg, #189a97 0%, #096dd9 100%);
+  --secondary-gradient: linear-gradient(135deg, #1890ff 0%, #1da8a5 100%);
+  --success-gradient: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  --warning-gradient: linear-gradient(135deg, #faad14 0%, #ffc53d 100%);
+  --error-gradient: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+
+  /* 状态色 */
+  --status-online: #52c41a;
+  --status-offline: #8c8c8c;
+  --status-busy: #faad14;
+  --status-away: #1890ff;
+
+  /* 极光特效变量 */
+  --aurora-opacity: 0.5;
+  --aurora-bg1: rgba(0, 0, 0, 0.1);
+  --aurora-bg: linear-gradient(135deg, rgba(15, 15, 15, 0.9) 0%, rgba(25, 35, 40, 0.85) 25%, rgba(29, 168, 165, 0.1) 50%, rgba(25, 123, 184, 0.08) 75%, rgba(20, 20, 20, 0.9) 100%);
+  --title-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --subtitle-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+
+  /* 最底层背景渐变色 */
+
+  --bg-container: linear-gradient(135deg, rgba(15, 15, 15, 0.98) 0%, rgba(25, 35, 40, 0.95) 25%, rgba(29, 168, 165, 0.15) 50%, rgba(25, 123, 184, 0.12) 75%, rgba(20, 20, 20, 0.98) 100%);
+
+  /* 兼容性变量 */
+  --color-primary: #1da8a5;
+  --color-primary-dark: #189a97;
+  --color-background: #1f2937;
+  --color-text: #f9fafb;
+}
+
+/* Android WebView 兼容性优化 */
+@layer base {
+
+  /* 确保在Android WebView中正确渲染 */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 优化移动端触摸体验 */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 确保按钮在Android上正确显示 */
+  button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* 优化边框在Android上的显示 */
+  .border-gray-300 {
+    border-color: var(--border-color) !important;
+  }
+
+  /* 确保背景色在Android上正确显示 */
+  .bg-gray-100 {
+    background-color: var(--bg-secondary) !important;
+  }
+
+  .bg-blue-500 {
+    background-color: var(--primary-color) !important;
+  }
+
+  .bg-gray-600 {
+    background-color: var(--text-secondary) !important;
+  }
+}

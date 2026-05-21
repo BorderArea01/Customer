@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+    
+    <!-- 临时配置：允许 agent-file.lzwcdm.com 使用过期证书（仅用于测试） -->
+    <!-- 生产环境请更新 SSL 证书，并移除此配置 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">agent-file.lzwcdm.com</domain>
+        <trust-anchors>
+            <!-- 允许系统证书 -->
+            <certificates src="system"/>
+            <!-- 允许用户证书（包括过期证书，仅测试用） -->
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+</network-security-config> 

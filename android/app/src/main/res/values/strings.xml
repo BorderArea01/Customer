@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">数字员工接待终端</string>
+    <string name="title_activity_main">数字员工接待终端</string>
+    <string name="package_name">com.lzwcai.demp.customer.v2</string>
+    <string name="custom_url_scheme">com.lzwcai.demp.customer.v2</string>
+</resources>

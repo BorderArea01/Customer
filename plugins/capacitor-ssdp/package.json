@@ -1,0 +1,37 @@
+{
+  "name": "capacitor-ssdp",
+  "version": "0.0.1",
+  "description": "SSDP discovery Capacitor plugin (Android + Web stub)",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "src/",
+    "rollup.config.mjs",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc && rollup -c rollup.config.mjs",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.30.1",
+    "typescript": "~5.8.0"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=7.0.0"
+  },
+  "capacitor": {
+    "android": {
+      "src": "android"
+    }
+  }
+}
