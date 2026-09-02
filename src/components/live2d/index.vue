@@ -91,7 +91,7 @@ import { useUpdate } from '@/hooks/update'
 import { Capacitor } from '@capacitor/core'
 import { LiveUpdate } from '@capawesome/capacitor-live-update'
 import { generateGreeting } from '@/utils/greeting'
-import { executeWorkflow } from '@/utils/workflow'
+import { executeWorkflow, toWorkflowNumericId } from '@/utils/workflow'
 
 // Router
 const router = useRouter()
@@ -1147,7 +1147,6 @@ const recognizeVisitor = async (faces: any[]) => {
       // 会话开始：直接发送MQTT通知
       try {
         if (!chatStore.mqttIsConnected) await chatStore.connectMqtt()
-        const user_id = visitorInfo.userId
         const session_id = userStore.currentSessionId
 
         // 确保 chatStore 的 sessionId 同步
@@ -1165,8 +1164,14 @@ const recognizeVisitor = async (faces: any[]) => {
         // await chatStore.sendMqttMessage('', { type: "0", user_id, session_id, sense: "用户进入" })
         console.log('🚪 [MQTT] 已注释掉用户进入消息，改为仅使用工作流')
         
-        // 调用开门工作流
-        executeWorkflow('open', { person_id: user_id })
+        // 身份区分只在工作流内部进行：前台把识别出的纯数字 person_id
+        // 传入，由工作流决定员工打卡或访客审批，不在这里提前分流。
+        const personId = toWorkflowNumericId(visitorInfo.userId)
+        if (!personId) {
+          console.error('[Workflow] Recognized userId is not a decimal number; skip open workflow')
+        } else {
+          void executeWorkflow('open', { person_id: personId })
+        }
         
         // 语音播报打招呼（仅在摄像头模式下）
         if (appConfigStore.isCameraEnabled) {

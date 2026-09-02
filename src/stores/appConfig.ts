@@ -141,14 +141,16 @@ type WorkflowConfigUpdate = {
 }
 
 const createDefaultWorkflowConfig = (): WorkflowConfig => ({
-  executionUrl: 'http://192.168.11.24:8088/open/workflow/execute',
+  // Door workflows are device-specific. Configure them in the terminal settings;
+  // never ship a production endpoint, workflow ID, or API key in source control.
+  executionUrl: '',
   openDoor: {
-    apiKey: 'wf_9703e9084824471582f0212aff2fc72e',
-    workflowId: '2031297462423851009'
+    apiKey: '',
+    workflowId: ''
   },
   closeDoor: {
-    apiKey: 'wf_7981ef74a7414c7a84d4f9b992c1fcf5',
-    workflowId: '2031634633458520065'
+    apiKey: '',
+    workflowId: ''
   }
 })
 

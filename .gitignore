@@ -13,7 +13,6 @@ lock
 .lock
 yarn.lock
 package-lock.json
-pnpm-lock.yaml
 
 .claude
 .vscode
@@ -27,6 +26,14 @@ coverage
 
 plugins/*/android/.gradle/
 plugins/*/android/build/
+plugins/*/android/local.properties
+plugins/*/node_modules/
+plugins/*/.kotlin/
+plugins/*/dist/
+
+# Local Codex diagnostics and temporary device/config snapshots
+.codex-tmp/
+.codex-asr-fix/
 
 /cypress/videos/
 /cypress/screenshots/

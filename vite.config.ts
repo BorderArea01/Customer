@@ -21,9 +21,15 @@ export default defineConfig({
     vueDevTools(),
   ],
   resolve: {
+    // Prefer TypeScript sources when an internal import omits its extension.
+    extensions: ['.mjs', '.mts', '.ts', '.jsx', '.tsx', '.json', '.js'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '$': fileURLToPath(new URL('./plugins', import.meta.url)),
+      'capacitor-detection': fileURLToPath(new URL('./plugins/capacitor-detection/src/index.ts', import.meta.url)),
+      'capacitor-funasr': fileURLToPath(new URL('./plugins/capacitor-funasr/src/index.ts', import.meta.url)),
+      'capacitor-speech': fileURLToPath(new URL('./plugins/capacitor-speech/src/index.ts', import.meta.url)),
+      'capacitor-ssdp': fileURLToPath(new URL('./plugins/capacitor-ssdp/src/index.ts', import.meta.url)),
     },
   },
   optimizeDeps: {

@@ -14,9 +14,18 @@ export const useUserStore = defineStore('user', () => {
   // 计算属性
   const isGuest = computed(() => {
     if (!currentVisitor.value) return true
-    return currentVisitor.value.userId === 'guest' || 
-           !currentVisitor.value.userId || 
-           currentVisitor.value.userId.trim() === ''
+    const { userId, userType } = currentVisitor.value
+    if (userId === 'guest' || !userId || userId.trim() === '') return true
+
+    // Treat an identity as a visitor unless the backend explicitly marks it as staff.
+    // A non-empty userId alone is not permission to open the door.
+    const normalizedType = String(userType || '').trim().toLowerCase()
+    return !(
+      normalizedType.includes('员工') ||
+      normalizedType === 'employee' ||
+      normalizedType === 'staff' ||
+      normalizedType === 'internal'
+    )
   })
   const visitorName = computed(() => {
     if (!currentVisitor.value) return '游客'
@@ -119,4 +128,4 @@ export const useUserStore = defineStore('user', () => {
     setRecognizing,
     endSession
   }
-}) 
+})

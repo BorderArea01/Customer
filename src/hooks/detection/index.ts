@@ -106,6 +106,12 @@ const useDetection = (options: {
   // 是否激活
   const isActive = ref(false)
   let _lastActiveTime = 0
+  // Only one capture/detection result may update presence at a time. Camera
+  // captures and ML Kit callbacks can complete out of order on slower Android
+  // devices; without this guard, an old positive frame can overwrite a newer
+  // empty frame and keep the terminal in the "person present" state.
+  let detectionInFlight = false
+  let detectionEpoch = 0
 
   // 激活回调
   let onActiveCallback: Callback = () => { }
@@ -198,6 +204,8 @@ const useDetection = (options: {
     markInitializing()
     startPromise = (async () => {
       try {
+        detectionEpoch += 1
+        detectionInFlight = false
         await service.loadModels()
         await startCameraPreview()
         await sleep(2000) // 等待摄像头预览稳定
@@ -218,6 +226,10 @@ const useDetection = (options: {
 
   // 停止检测
   const stop = async () => {
+    // Ignore any asynchronous result that was captured before detection was
+    // stopped. It must not reactivate presence after the camera is closed.
+    detectionEpoch += 1
+    detectionInFlight = false
     if (startPromise) {
       try {
         await startPromise
@@ -225,6 +237,10 @@ const useDetection = (options: {
         // ignore start errors, already handled in start()
       }
     }
+    // start() may have completed after the first invalidation above. Advance
+    // once more so a result from that startup cannot survive this stop().
+    detectionEpoch += 1
+    detectionInFlight = false
     if (!isRunning.value) {
       if (cameraStatus.value !== 'error') {
         cameraStatus.value = 'idle'
@@ -303,28 +319,52 @@ const useDetection = (options: {
 
   // 检测帧
   const detectFrame = async () => {
+    if (detectionInFlight) {
+      return
+    }
+
+    const frameEpoch = detectionEpoch
+    detectionInFlight = true
     try {
       const base64PictureData = await capture()
-      Promise.all([
+      const [faces, persons] = await Promise.all([
         service.detectFaces(base64PictureData, faceMinArea, faceMaxArea, faceMinConfidence, faceMaxAngle, faceRequireFrontal),
         service.detectPersons(base64PictureData, personMaxPersons, personMinCoverage),
-      ]).then(([faces, persons]) => {
+      ])
+
+      // A result from an older camera lifecycle is stale (for example after a
+      // preview restart), so it cannot affect the current presence state.
+      if (frameEpoch !== detectionEpoch || !isRunning.value) {
+        return
+      }
+
+      // The terminal's automatic interaction is explicitly a frontal-face
+      // interaction. Selfie segmentation is still returned to callers as
+      // supplemental information, but it must not independently keep a user
+      // session alive: reflective/static backgrounds can otherwise be
+      // segmented as foreground forever.
+      const hasValidFace = faces.length > 0
+      const now = Date.now()
+      if (hasValidFace) {
+        _lastActiveTime = now
         if (!isActive.value) {
-          isActive.value = Boolean(faces.length)
-          isActive.value && onActiveCallback(faces, persons)
+          isActive.value = true
+          onActiveCallback(faces, persons)
         }
-        if (faces.length > 0 || persons.length > 0) {
-          _lastActiveTime = Date.now()
-        } else {
-          if (_lastActiveTime && Date.now() - _lastActiveTime > leaveDuration * 1000) {
-            isActive.value = false
-            _lastActiveTime = 0
-            onInactiveCallback(faces, persons)
-          }
-        }
-      })
+        return
+      }
+
+      if (isActive.value && _lastActiveTime && now - _lastActiveTime > leaveDuration * 1000) {
+        isActive.value = false
+        _lastActiveTime = 0
+        onInactiveCallback(faces, persons)
+      }
     } catch (err) {
       console.error('检测失败:', err)
+    } finally {
+      if (frameEpoch === detectionEpoch) {
+        detectionInFlight = false
+      }
     }
   }
 
